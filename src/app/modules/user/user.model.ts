@@ -1,0 +1,102 @@
+import { Schema, model } from 'mongoose';
+import { TAddress, TName, TOrder, TUser } from './user.interface';
+
+const nameSchema = new Schema<TName>({
+  firstName: {
+    type: String,
+    trim: true,
+    required: [true, 'First name is required'],
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    required: [true, 'Last name is required'],
+  },
+});
+
+const addressSchema = new Schema<TAddress>({
+  street: {
+    type: String,
+    trim: true,
+    required: [true, 'Street name is required'],
+  },
+  city: {
+    type: String,
+    trim: true,
+    required: [true, 'City name is required'],
+  },
+  country: {
+    type: String,
+    trim: true,
+    required: [true, 'Country name is required'],
+  },
+});
+
+const orderSchema = new Schema<TOrder>({
+  productName: {
+    type: String,
+    trim: true,
+    required: [true, 'Product name is required'],
+  },
+  price: {
+    type: Number,
+    trim: true,
+    required: [true, 'Product price is required'],
+  },
+  quantity: {
+    type: Number,
+    trim: true,
+    required: [true, 'Product quantity is required'],
+  },
+});
+
+const UserSchema = new Schema<TUser>({
+  userId: {
+    type: Number,
+    unique: true,
+    required: true,
+  },
+  username: {
+    type: String,
+    unique: true,
+    trim: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+  },
+  fullName: {
+    type: nameSchema,
+    required: [true, 'Name name is required'],
+  },
+  age: {
+    type: Number,
+    trim: true,
+    required: [true, 'Age is required'],
+  },
+  email: {
+    type: String,
+    trim: true,
+    required: [true, 'Email is required'],
+    unique: true,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  hobbies: {
+    type: [String],
+    default: [],
+  },
+  address: {
+    type: addressSchema,
+    required: [true, 'Address is required'],
+  },
+  orders: {
+    type: [orderSchema],
+    default: [],
+  },
+});
+
+export const User = model<TUser>('User', UserSchema);
