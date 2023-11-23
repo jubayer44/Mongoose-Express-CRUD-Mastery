@@ -11,13 +11,11 @@ export type TAddress = {
   country: string;
 };
 
-export type TOrder =
-  | {
-      productName: string;
-      price: number;
-      quantity: number;
-    }[]
-  | null;
+export type TOrder = {
+  productName: string;
+  price: number;
+  quantity: number;
+};
 
 export type TUser = {
   userId: number;
@@ -29,7 +27,7 @@ export type TUser = {
   isActive: boolean;
   hobbies: string[];
   address: TAddress;
-  orders?: TOrder;
+  orders?: Array<TOrder>;
 };
 
 interface UserModel extends Model<TUser> {

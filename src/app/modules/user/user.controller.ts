@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
-import userValidationSchema from './user.validation';
+import userValidationSchema, { orderValidationSchema } from './user.validation';
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -18,8 +18,11 @@ const createUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'Something went wrong!',
-      error: error.message,
+      message: error.message,
+      error: {
+        code: 500,
+        description: error.message,
+      },
     });
   }
 };
@@ -37,8 +40,11 @@ const getAllUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'Something went wrong!',
-      error: error.message,
+      message: error.message,
+      error: {
+        code: 500,
+        description: error.message,
+      },
     });
   }
 };
@@ -60,7 +66,7 @@ const getSingleUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(404).json({
       success: false,
-      message: 'User not found',
+      message: error.message,
       error: {
         code: 404,
         description: error.message,
@@ -90,7 +96,7 @@ const updateUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(404).json({
       success: false,
-      message: 'User not found',
+      message: error.message,
       error: {
         code: 404,
         description: error.message,
@@ -116,7 +122,62 @@ const deleteUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(404).json({
       success: false,
-      message: 'User not found',
+      message: error.message,
+      error: {
+        code: 404,
+        description: error.message,
+      },
+    });
+  }
+};
+
+const addNewProduct = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const product = req.body;
+    const parsedOrderData = orderValidationSchema.parse(product);
+    const result = await UserServices.addNewProductIntoOrder(
+      parseFloat(id),
+      parsedOrderData,
+    );
+
+    if (result.acknowledged === true) {
+      res.status(200).json({
+        success: true,
+        message: 'Order created successfully!',
+        data: null,
+      });
+    }
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: error.message,
+      },
+    });
+  }
+};
+
+const getUserOrders = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.getUserOrdersFromDb(parseFloat(id));
+
+    res.status(200).json({
+      success: true,
+      message: 'User fetched successfully!',
+      data: result,
+    });
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
       error: {
         code: 404,
         description: error.message,
@@ -131,4 +192,6 @@ export const UserController = {
   getSingleUser,
   updateUser,
   deleteUser,
+  addNewProduct,
+  getUserOrders,
 };

@@ -97,7 +97,6 @@ const UserSchema = new Schema<TUser, UserModel>({
   },
   orders: {
     type: [orderSchema],
-    default: [],
   },
 });
 
