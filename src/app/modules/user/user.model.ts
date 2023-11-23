@@ -112,10 +112,12 @@ UserSchema.pre('save', async function (next) {
 });
 
 // Protect Password from showing
-UserSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
+UserSchema.methods.toJSON = function () {
+  const user = this; // eslint-disable-line
+  const userObject = user.toObject();
+  delete userObject.password;
+  return userObject;
+};
 
 // Find User By Id
 UserSchema.statics.isUserExists = async function (id: number) {

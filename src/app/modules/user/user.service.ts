@@ -17,11 +17,36 @@ const getAllUserFromDb = async () => {
 
 const getSingleUserFromDb = async (id: number) => {
   const user = await User.isUserExists(id);
+  if (!user) {
+    throw new Error('User not found');
+  }
   return user;
 };
 
-export const studentServices = {
+const updateUserIntoDb = async (id: number, user: TUser) => {
+  const existsUser = await User.isUserExists(id);
+  if (!existsUser) {
+    throw new Error('User not found');
+  }
+
+  const userData = await User.updateOne({ userId: id }, user);
+  const userInfo = await User.findOne({ userId: id }, { _id: 0, orders: 0 });
+  return { userData, userInfo };
+};
+
+const deleteUserFromDb = async (id: number) => {
+  const existsUser = await User.isUserExists(id);
+  if (!existsUser) {
+    throw new Error('User not found');
+  }
+  const result = await User.deleteOne({ userId: id });
+  return result;
+};
+
+export const UserServices = {
   createUserIntoDb,
   getAllUserFromDb,
   getSingleUserFromDb,
+  updateUserIntoDb,
+  deleteUserFromDb,
 };
