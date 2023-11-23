@@ -186,6 +186,29 @@ const getUserOrders = async (req: Request, res: Response) => {
   }
 };
 
+const getUserOrdersTotal = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+    const result = await UserServices.getUserOrderTotalAmount(parseFloat(id));
+    res.status(200).json({
+      success: true,
+      message: 'Total price calculated successfully!',
+      data: result,
+    });
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: error.message,
+      error: {
+        code: 404,
+        description: error.message,
+      },
+    });
+  }
+};
+
 export const UserController = {
   createUser,
   getAllUser,
@@ -194,4 +217,5 @@ export const UserController = {
   deleteUser,
   addNewProduct,
   getUserOrders,
+  getUserOrdersTotal,
 };

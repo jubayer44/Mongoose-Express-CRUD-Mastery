@@ -118,7 +118,7 @@ UserSchema.methods.toJSON = function () {
   return userObject;
 };
 
-// Find User By Id
+// Check User Exists or not with Static
 UserSchema.statics.isUserExists = async function (id: number) {
   const user = await User.findOne(
     { userId: id },
