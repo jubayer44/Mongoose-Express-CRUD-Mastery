@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UserServices } from './user.service';
 import userValidationSchema, { orderValidationSchema } from './user.validation';
 
+// post-route-"/api/users"
 const createUser = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
@@ -27,6 +28,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
+// get-route-"/api/users"
 const getAllUser = async (req: Request, res: Response) => {
   try {
     const result = await UserServices.getAllUserFromDb();
@@ -49,6 +51,7 @@ const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
+// get-route-"/api/users/:userId"
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;
@@ -75,6 +78,7 @@ const getSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// put-route-"/api/users/:userId"
 const updateUser = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;
@@ -105,6 +109,7 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+// delete-route-"/api/users/:userId"
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;
@@ -131,6 +136,7 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+// put-route-"/api/users/:userId/orders"
 const addNewProduct = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;
@@ -162,6 +168,7 @@ const addNewProduct = async (req: Request, res: Response) => {
   }
 };
 
+// get-route-"/api/users/:userId/orders"
 const getUserOrders = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;
@@ -186,6 +193,7 @@ const getUserOrders = async (req: Request, res: Response) => {
   }
 };
 
+// get-route-"/api/users/:userId/orders/total-price"
 const getUserOrdersTotal = async (req: Request, res: Response) => {
   try {
     const id = req.params?.userId;

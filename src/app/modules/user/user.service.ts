@@ -1,11 +1,13 @@
 import { TOrder, TUser } from './user.interface';
 import { User } from './user.model';
 
+// post-route-"/api/users"
 const createUserIntoDb = async (user: TUser) => {
   const result = await User.create(user);
   return result;
 };
 
+// get-route-"/api/users"
 const getAllUserFromDb = async () => {
   const result = await User.find(
     {},
@@ -15,6 +17,7 @@ const getAllUserFromDb = async () => {
   return result;
 };
 
+// get-route-"/api/users/:userId"
 const getSingleUserFromDb = async (id: number) => {
   const user = await User.isUserExists(id);
   if (!user) {
@@ -23,6 +26,7 @@ const getSingleUserFromDb = async (id: number) => {
   return user;
 };
 
+// put-route-"/api/users/:userId"
 const updateUserIntoDb = async (id: number, user: TUser) => {
   const existsUser = await User.isUserExists(id);
   if (!existsUser) {
@@ -34,6 +38,7 @@ const updateUserIntoDb = async (id: number, user: TUser) => {
   return { userData, userInfo };
 };
 
+// delete-route-"/api/users/:userId"
 const deleteUserFromDb = async (id: number) => {
   const existsUser = await User.isUserExists(id);
   if (!existsUser) {
@@ -43,6 +48,7 @@ const deleteUserFromDb = async (id: number) => {
   return result;
 };
 
+// put-route-"/api/users/:userId/orders"
 const addNewProductIntoOrder = async (id: number, product: TOrder) => {
   const existsUser = await User.isUserExists(id);
   if (!existsUser) {
@@ -55,6 +61,7 @@ const addNewProductIntoOrder = async (id: number, product: TOrder) => {
   return result;
 };
 
+// get-route-"/api/users/:userId/orders"
 const getUserOrdersFromDb = async (id: number) => {
   const existsUser = await User.isUserExists(id);
   if (!existsUser) {
@@ -65,6 +72,7 @@ const getUserOrdersFromDb = async (id: number) => {
   return result;
 };
 
+// get-route-"/api/users/:userId/orders/total-price"
 const getUserOrderTotalAmount = async (id: number) => {
   const existsUser = await User.isUserExists(id);
   if (!existsUser) {
