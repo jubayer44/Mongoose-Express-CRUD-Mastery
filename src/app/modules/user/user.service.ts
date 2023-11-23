@@ -15,4 +15,13 @@ const getAllUserFromDb = async () => {
   return result;
 };
 
-export const studentServices = { createUserIntoDb, getAllUserFromDb };
+const getSingleUserFromDb = async (id: number) => {
+  const user = await User.isUserExists(id);
+  return user;
+};
+
+export const studentServices = {
+  createUserIntoDb,
+  getAllUserFromDb,
+  getSingleUserFromDb,
+};

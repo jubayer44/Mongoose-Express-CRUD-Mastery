@@ -43,4 +43,37 @@ const getAllUser = async (req: Request, res: Response) => {
   }
 };
 
-export const studentController = { createUser, getAllUser };
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const id = req.params?.userId;
+
+    const result = await studentServices.getSingleUserFromDb(parseFloat(id));
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'User fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+
+    // eslint-disable-next-line
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: 'Something went wrong!',
+      error: error.message,
+    });
+  }
+};
+
+export const studentController = { createUser, getAllUser, getSingleUser };
