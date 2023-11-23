@@ -12,4 +12,15 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Server is running');
 });
 
+app.all('*', (req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: 'Page not found',
+    error: {
+      code: 404,
+      description: 'Page not found',
+    },
+  });
+});
+
 export default app;

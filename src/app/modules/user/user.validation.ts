@@ -13,7 +13,9 @@ const nameValidationSchema = z.object({
 
 const addressValidationSchema = z.object({
   street: z.string(),
-  city: z.string(),
+  city: z.string().refine((data) => typeof data === 'string', {
+    message: 'City must be a string',
+  }),
   country: z.string(),
 });
 
