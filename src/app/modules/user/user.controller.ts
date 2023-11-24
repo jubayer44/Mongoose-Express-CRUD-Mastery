@@ -17,12 +17,12 @@ const createUser = async (req: Request, res: Response) => {
     });
     // eslint-disable-next-line
   } catch (error: any) {
-    res.status(500).json({
+    res.status(404).json({
       success: false,
-      message: error.message,
+      message: JSON.parse(error.message)[0].message,
       error: {
-        code: 500,
-        description: error.message,
+        code: 404,
+        description: JSON.parse(error.message)[0].message,
       },
     });
   }
@@ -40,11 +40,11 @@ const getAllUser = async (req: Request, res: Response) => {
 
     // eslint-disable-next-line
   } catch (error: any) {
-    res.status(500).json({
+    res.status(404).json({
       success: false,
       message: error.message,
       error: {
-        code: 500,
+        code: 404,
         description: error.message,
       },
     });
@@ -100,10 +100,10 @@ const updateUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(404).json({
       success: false,
-      message: error.message,
+      message: JSON.parse(error.message)[0].message,
       error: {
         code: 404,
-        description: error.message,
+        description: JSON.parse(error.message)[0].message,
       },
     });
   }
@@ -159,10 +159,10 @@ const addNewProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(404).json({
       success: false,
-      message: error.message,
+      message: JSON.parse(error.message)[0].message,
       error: {
         code: 404,
-        description: error.message,
+        description: JSON.parse(error.message)[0].message,
       },
     });
   }

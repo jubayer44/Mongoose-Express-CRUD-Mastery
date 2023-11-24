@@ -11,29 +11,76 @@ const nameValidationSchema = z.object({
   }),
 });
 
-const addressValidationSchema = z.object({
-  street: z.string(),
-  city: z.string().refine((data) => typeof data === 'string', {
-    message: 'City must be a string',
-  }),
-  country: z.string(),
-});
+const addressValidationSchema = z.object(
+  {
+    street: z.string({
+      required_error: 'street is required',
+      invalid_type_error: 'street must be a string',
+    }),
+    city: z.string({
+      required_error: 'city is required',
+      invalid_type_error: 'city must be a string',
+    }),
+    country: z.string({
+      required_error: 'country is required',
+      invalid_type_error: 'country must be a string',
+    }),
+  },
+  {
+    required_error: 'address is required',
+    invalid_type_error: 'address must be an object',
+  },
+);
 
 export const orderValidationSchema = z.object({
-  productName: z.string(),
-  price: z.number(),
-  quantity: z.number(),
+  productName: z.string({
+    required_error: 'productName is required',
+    invalid_type_error: 'productName must be a string',
+  }),
+  price: z.number({
+    required_error: 'price is required',
+    invalid_type_error: 'price must be a number',
+  }),
+  quantity: z.number({
+    required_error: 'quantity is required',
+    invalid_type_error: 'quantity must be a number',
+  }),
 });
 
 const userValidationSchema = z.object({
-  userId: z.number(),
-  username: z.string(),
-  password: z.string(),
+  userId: z.number({
+    required_error: 'userId is required',
+    invalid_type_error: 'userId must be a number',
+  }),
+  username: z.string({
+    required_error: 'username is required',
+    invalid_type_error: 'username must be a string',
+  }),
+  password: z.string({
+    required_error: 'password is required',
+    invalid_type_error: 'password must be a string',
+  }),
   fullName: nameValidationSchema,
-  age: z.number(),
-  email: z.string().email(),
-  isActive: z.boolean(),
-  hobbies: z.array(z.string()),
+  age: z.number({
+    required_error: 'age is required',
+    invalid_type_error: 'age must be a number',
+  }),
+  email: z
+    .string({
+      required_error: 'email is required',
+      invalid_type_error: 'email must be a string',
+    })
+    .email(),
+  isActive: z.boolean({
+    required_error: 'isActive is required',
+    invalid_type_error: 'isActive must be a boolean',
+  }),
+  hobbies: z.array(
+    z.string({
+      required_error: 'hobbies is required',
+      invalid_type_error: 'hobbies must be a string',
+    }),
+  ),
   address: addressValidationSchema,
   orders: z.array(orderValidationSchema).optional(),
 });
