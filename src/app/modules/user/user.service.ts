@@ -4,7 +4,10 @@ import { User } from './user.model';
 // post-route-"/api/users"
 const createUserIntoDb = async (user: TUser) => {
   const result = await User.create(user);
-  return result;
+  const data = await User.findOne({ userId: result.userId }).select(
+    '-_id -__v -orders',
+  );
+  return data;
 };
 
 // get-route-"/api/users"
