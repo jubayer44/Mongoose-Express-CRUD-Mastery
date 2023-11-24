@@ -14,7 +14,7 @@ const createUserIntoDb = async (user: TUser) => {
 const getAllUserFromDb = async () => {
   const result = await User.find(
     {},
-    { username: 1, fullName: 1, age: 1, email: 1, address: 1 },
+    { username: 1, fullName: 1, age: 1, email: 1, address: 1, _id: 0 },
   );
 
   return result;
@@ -37,7 +37,10 @@ const updateUserIntoDb = async (id: number, user: TUser) => {
   }
 
   const userData = await User.updateOne({ userId: id }, user);
-  const userInfo = await User.findOne({ userId: id }, { _id: 0, orders: 0 });
+  const userInfo = await User.findOne(
+    { userId: id },
+    { _id: 0, orders: 0, __v: 0 },
+  );
   return { userData, userInfo };
 };
 

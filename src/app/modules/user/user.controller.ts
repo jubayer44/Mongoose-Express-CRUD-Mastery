@@ -70,7 +70,9 @@ const updateUser = async (req: Request, res: Response) => {
       parsedUserData,
     );
     if (result?.userData)
-      res.status(200).json(successMessage('User updated successfully!', null));
+      res
+        .status(200)
+        .json(successMessage('User updated successfully!', result.userInfo));
 
     // eslint-disable-next-line
   } catch (error: any) {
