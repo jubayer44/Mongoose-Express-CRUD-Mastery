@@ -9,7 +9,7 @@ async function server() {
     await mongoose.connect(config.dbUrl as string);
 
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${config.port}`); // eslint-disable-line
+      console.log(`Server is running on port ${PORT}`); // eslint-disable-line
     });
   } catch (error) {
     console.log(error); // eslint-disable-line

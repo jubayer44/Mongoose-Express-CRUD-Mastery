@@ -21,22 +21,11 @@ const createUser = async (req: Request, res: Response) => {
 const getAllUser = async (req: Request, res: Response) => {
   try {
     const result = await UserServices.getAllUserFromDb();
-    res.status(200).json({
-      success: true,
-      message: 'User fetched successfully!',
-      data: result,
-    });
+    res.status(200).json(successMessage('User fetched successfully!', result));
 
     // eslint-disable-next-line
   } catch (error: any) {
-    res.status(404).json({
-      success: false,
-      message: error.message,
-      error: {
-        code: 404,
-        description: error.message,
-      },
-    });
+    res.status(404).json(errorMessage(error));
   }
 };
 
@@ -144,14 +133,7 @@ const getUserOrdersTotal = async (req: Request, res: Response) => {
 
     // eslint-disable-next-line
   } catch (error: any) {
-    res.status(404).json({
-      success: false,
-      message: error.message,
-      error: {
-        code: 404,
-        description: error.message,
-      },
-    });
+    res.status(404).json(errorMessage(error));
   }
 };
 
